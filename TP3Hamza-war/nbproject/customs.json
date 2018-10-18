@@ -1,0 +1,8 @@
+{
+    "elements": {
+        "p:commandButton": {},
+        "ui:define": {},
+        "h:form": {}
+    },
+    "attributes": {}
+}

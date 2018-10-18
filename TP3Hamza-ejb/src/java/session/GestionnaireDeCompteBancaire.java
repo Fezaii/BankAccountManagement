@@ -1,0 +1,205 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package session;
+
+import entities.CompteBancaire;
+import entities.OperationBancaire;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+/**
+ *
+ * @author Hamza
+ */
+@Stateless
+@LocalBean
+public class GestionnaireDeCompteBancaire {
+
+    @PersistenceContext(unitName = "TP3Hamza-ejbPU")
+    private EntityManager em;
+
+    public CompteBancaire creerCompte(int solde) {
+        CompteBancaire compte = new CompteBancaire(solde);
+        persist(compte);
+        return compte;
+    }
+
+    public List<CompteBancaire> getAllComptes() {
+        Query query = em.createNamedQuery("CompteBancaire.findAll");
+        List<CompteBancaire> liste = query.getResultList();
+        return liste;
+    }
+
+    public String creerCompteTest() {
+        creerCompte(150000);
+        creerCompte(950000);
+        creerCompte(20000);
+        creerCompte(100000);
+        return "liste_comptes";
+    }
+
+    public void persist(Object object) {
+        em.persist(object);
+    }
+public CompteBancaire update(CompteBancaire compte) {
+        return em.merge(compte);
+    }
+    
+    public CompteBancaire creerCompte(String nom, float solde){
+        CompteBancaire compte = new CompteBancaire(solde);
+        creerOperation(compte, "Création du compte", solde);
+        persist(compte);       
+        return compte;
+    }
+   
+      public void transferer(CompteBancaire source, CompteBancaire destination, 
+          int montant) {
+    int val = source.retirer(montant);
+    if (val == 0) {
+
+      return;
+    }
+    destination.deposer(montant);
+    update(source);
+    update(destination);
+  }
+  
+  public void supprimer(CompteBancaire compteBancaire) {
+    em.remove(em.merge(compteBancaire));
+  }
+  
+    public CompteBancaire getCompteByID(Long id){
+        
+        Query query = em.createNamedQuery("CompteBancaire.findById").setParameter("id", id);
+       
+        return (CompteBancaire) query.getSingleResult();
+    }
+    
+    public CompteBancaire getCompteByName(String nom){
+        
+        Query query = em.createNamedQuery("CompteBancaire.findByName").setParameter("nom", nom);
+        if(query.getResultList().size() > 0) {
+            return (CompteBancaire)query.getSingleResult();
+        }
+        else {
+            return null;
+        }
+    }
+    
+    public int getNBComptes(){
+        Query query = em.createNamedQuery("CompteBancaire.nbComptes");
+        
+        return ((Long) query.getSingleResult()).intValue();
+    }
+    
+    /**
+     * Supprimer un compte bancaire
+     * @param compte 
+     */
+    public void delete(CompteBancaire compte) {
+        em.remove(em.merge(compte));
+    }
+    
+    public void creerOperation(CompteBancaire compte, String descrption, float montant){
+        OperationBancaire op = new OperationBancaire(descrption, montant);
+        compte.getOperations().add(op);
+    }
+    
+    public CompteBancaire consulter(long id) {   
+        return em.find(CompteBancaire.class, id);
+    }
+
+  
+    public CompteBancaire deposer(CompteBancaire compte, float montant){
+        compte.depot(montant);
+        creerOperation(compte, "Dépot", montant);
+        em.merge(compte);
+        
+        return update (compte);
+    }
+    
+    public CompteBancaire retirer(CompteBancaire compte, float montant){
+        compte.retrait(montant);
+        creerOperation(compte, "Retrait", montant);
+        em.merge(compte);
+        return update (compte);
+    }
+    
+    
+    public void operation(int op, CompteBancaire compte, float montant){
+               
+        if (op == 0){
+            compte = this.retirer(compte, montant);
+        }
+        else 
+            if (op == 1) {
+            compte= this.deposer(compte, montant);      
+            }
+        
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Opération réussie !","L'opération a été effectuée");  
+          
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    public void transfertArgent(Long idDebiteur,Long idCrediteur, float montant){
+        
+        CompteBancaire compteDebiteur = getCompteByID(idDebiteur);
+        CompteBancaire compteCrediteur= getCompteByID(idCrediteur);
+        
+        compteDebiteur.retrait(montant);
+        compteCrediteur.depot(montant);
+        
+        creerOperation(compteDebiteur, "Virement effectué à "+compteCrediteur.getClient().getNom()+"-"+compteCrediteur.getClient().getPrenom(), montant);
+        creerOperation(compteCrediteur, "Virement reçu de "+ compteDebiteur.getClient().getNom()+"-"+compteDebiteur.getClient().getPrenom(), montant);
+        
+        em.merge(compteDebiteur);
+        em.merge(compteCrediteur);
+    }
+        public List<OperationBancaire> getOperations(int id) {
+        CompteBancaire c = em.find(CompteBancaire.class, id);
+        return c.getOperations();
+    }
+
+      
+    public void creerComptesTest() {  
+     
+       creerCompte("John Lennon", 150000);  
+       creerCompte("Cartney", 950000);  
+       creerCompte("Ringo Starr", 20000);  
+       creerCompte("Georges Harrisson", 100000); 
+       
+       creerCompte("Bob Dylan", 240000);  
+       creerCompte("Bob Marley", 1050000);  
+       creerCompte("Eric Clapton", 200000);  
+       creerCompte("Nightwish", 108090); 
+       
+       creerCompte("test1", 150020);  
+       creerCompte("test2", 950001);  
+       creerCompte("test3", 20030);  
+       creerCompte("test4", 100050); 
+       
+       creerCompte("test5", 150);  
+       creerCompte("test6", 9876);  
+       creerCompte("test7", 34);  
+       creerCompte("test8", 12); 
+       
+       creerCompte("test9", 8998700);  
+       creerCompte("test10", 11111);  
+       creerCompte("test11", 9888000);  
+       creerCompte("test12", 298098); 
+       
+       creerCompte("test13", 12300);  
+       creerCompte("test14", 123500);  
+       creerCompte("test15", 23490);  
+       creerCompte("test16", 10); 
+    }  
+}
