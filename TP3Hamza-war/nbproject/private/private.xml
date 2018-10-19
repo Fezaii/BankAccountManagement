@@ -4,7 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/web/ListeOperations.xhtml</file>
+            <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/web/index.xhtml</file>
+            <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/web/DefaultTemplate.xhtml</file>
+            <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/web/ListeComptes.xhtml</file>
+            <file>file:/C:/Users/Hamza/Documents/NetBeansProjects/TP3Hamza/BankAccountManagement/TP3Hamza-war/src/java/managedbeans/CompteMBean.java</file>
         </group>
     </open-files>
 </project-private>

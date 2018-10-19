@@ -4,20 +4,20 @@
                 template="./DefaultTemplate.xhtml">
 
     <ui:define name="top">
-        top
+        <h1> Application de gestion de comptes bancaires </h1>
     </ui:define>
 
     <ui:define name="left">
-        left
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
+        </div>
+        <div>
+            <a href="faces/ListeOperations.xhtml"> Liste des operations </a>
+        </div>
     </ui:define>
 
     <ui:define name="content">
-            <div>
-                <a href="faces/ListeComptes.xhtml"> La liste des comptes </a>
-            </div>
-            <div>
-                <a href="faces/ListeOperations.xhtml"> La liste des operations </a>
-            </div>
+        <h1><strong>Naviguez vers le menu a gauche !</strong></h1>
     </ui:define>
 
 </ui:composition>

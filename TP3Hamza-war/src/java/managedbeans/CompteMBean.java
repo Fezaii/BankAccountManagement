@@ -62,9 +62,8 @@ public class CompteMBean implements Serializable {
         return listeComptes;
     }
 
-    public String compteTest() {
+    public void compteTest() {
         compteManager.creerComptesTest();
-        return "listeComptes";
     }
 
     public float getMontant() {
