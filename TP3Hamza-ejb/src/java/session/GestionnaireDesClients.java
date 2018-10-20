@@ -33,7 +33,7 @@ public class GestionnaireDesClients {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
     
     @EJB
-    private GestionnaireDeCompteBancaire managerClient;
+    private GestionnaireDesClients managerClient;
     
 
     public void persist(Object object) {
@@ -55,8 +55,7 @@ public class GestionnaireDesClients {
         
         compte.setClient(client);
         client.getListeComptes().add(compte);
-        
-       
+
         em.persist(client);
         em.persist(compte);
     }
@@ -65,25 +64,25 @@ public class GestionnaireDesClients {
         em.persist(client);
     }
     
-//    public Client findClientByID(Long id){
-//        Query query = em.createQuery("SELECT c FROM Client c WHERE c.id =: id");
-//        query.setParameter("id", id);
-//        return (Client) query.getSingleResult();
-//    }
-//    
-//    public Client findClientByName(String nom){
-//        Query query= em.createQuery("SELECT c FROM client c WHERE c.nom =:nom");
-//        query.setParameter("nom", nom);
-//         try {
-//            return (Client) query.getSingleResult();
-//        } catch (NoResultException e) {
-//            return null;
-//        } catch (NonUniqueResultException en) {
-//            List<Client> clients = (List<Client>) query.getResultList();
-//
-//            return clients.get(0);
-//        }
-//    }
+    public Client findClientByID(Long id){
+        Query query = em.createQuery("SELECT c FROM Client c WHERE c.id =: id");
+        query.setParameter("id", id);
+        return (Client) query.getSingleResult();
+    }
+    
+    public Client findClientByName(String nom){
+        Query query= em.createQuery("SELECT c FROM Client c WHERE c.nom =:nom");
+        query.setParameter("nom", nom);
+         try {
+            return (Client) query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException en) {
+            List<Client> clients = (List<Client>) query.getResultList();
+
+            return clients.get(0);
+        }
+    }
     
     /**
      * Creer des clients test

@@ -1,13 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      template="./DefaultTemplate.xhtml">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                template="./DefaultTemplate.xhtml">
 
     <h:body>
-
+        <ui:define name="left">
+            <div>
+                <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
+            </div>
+            <div>
+                <a href="faces/ListeOperations.xhtml"> Liste des operations </a>
+            </div>
+        </ui:define>
         <ui:define name="content">
             <h1>Liste opérations compte No </h1>
             <f:view>
@@ -15,7 +22,7 @@
 
                 <h:form>
                     <h1><h:outputText value="List"/></h1>
-                    <h:dataTable value="#{operationsBancairesMBean.operations}" var="item">
+                    <h:dataTable value="#{operationBancaireMBean.operations}" var="item">
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="Description"/>

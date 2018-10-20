@@ -157,18 +157,18 @@ public class CompteMBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Virement réussi !", "Le viremenent a été effectué");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "listeComptes??faces-redirect=true";
+        return "listeComptes?faces-redirect=true";
     }
 
-    public String suppression() {
-
-        compteManager.delete(this.compte);
-
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        return "listeComptes";
-    }
+//    public String suppression() {
+//
+//        compteManager.delete(this.compte);
+//
+//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
+//
+//        FacesContext.getCurrentInstance().addMessage(null, message);
+//        return "listeComptes";
+//    }
 
     public void suppress() {
         compteManager.delete(this.compte);

@@ -14,6 +14,7 @@ import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import session.GestionnaireDeCompteBancaire;
 import session.GestionnaireDesClients;
 
 /**
@@ -21,11 +22,12 @@ import session.GestionnaireDesClients;
  * @author Hamza
  */
 @Named(value = "clientMBean")
-@SessionScoped
+@ViewScoped
 public class ClientMBean implements Serializable {
 
     @EJB
     private GestionnaireDesClients managerClient;
+
     
     private String nom;
     private String prenom;
@@ -51,10 +53,9 @@ public class ClientMBean implements Serializable {
         
     }
     
-    public String compteTest() throws ParseException{
+    public void clientTest() throws ParseException{
         managerClient.creerClientTest();
-        return "listeComptes";
-    } 
+    }
 
     public String getNom() {
         return nom;

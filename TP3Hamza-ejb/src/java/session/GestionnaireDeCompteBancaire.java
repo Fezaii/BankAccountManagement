@@ -61,9 +61,8 @@ public CompteBancaire update(CompteBancaire compte) {
         return compte;
     }
    
-      public void transferer(CompteBancaire source, CompteBancaire destination, 
-          int montant) {
-    int val = source.retirer(montant);
+      public void transferer(CompteBancaire source, CompteBancaire destination, float montant) {
+    float val = source.retirer(montant);
     if (val == 0) {
 
       return;
@@ -120,7 +119,7 @@ public CompteBancaire update(CompteBancaire compte) {
 
   
     public CompteBancaire deposer(CompteBancaire compte, float montant){
-        compte.depot(montant);
+        compte.deposer(montant);
         creerOperation(compte, "Dépot", montant);
         em.merge(compte);
         
@@ -128,7 +127,7 @@ public CompteBancaire update(CompteBancaire compte) {
     }
     
     public CompteBancaire retirer(CompteBancaire compte, float montant){
-        compte.retrait(montant);
+        compte.retirer(montant);
         creerOperation(compte, "Retrait", montant);
         em.merge(compte);
         return update (compte);
@@ -155,8 +154,8 @@ public CompteBancaire update(CompteBancaire compte) {
         CompteBancaire compteDebiteur = getCompteByID(idDebiteur);
         CompteBancaire compteCrediteur= getCompteByID(idCrediteur);
         
-        compteDebiteur.retrait(montant);
-        compteCrediteur.depot(montant);
+        compteDebiteur.retirer(montant);
+        compteCrediteur.deposer(montant);
         
         creerOperation(compteDebiteur, "Virement effectué à "+compteCrediteur.getClient().getNom()+"-"+compteCrediteur.getClient().getPrenom(), montant);
         creerOperation(compteCrediteur, "Virement reçu de "+ compteDebiteur.getClient().getNom()+"-"+compteDebiteur.getClient().getPrenom(), montant);

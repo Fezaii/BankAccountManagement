@@ -30,8 +30,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "COMPTEBANCAIRE")
 @XmlRootElement
 @NamedQueries({
-@NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c ORDER BY c.id"),
-@NamedQuery(name = "CompteBancaire.findById", query = "SELECT c FROM CompteBancaire c WHERE c.id = :id"),
+    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c ORDER BY c.id")
+    ,
+@NamedQuery(name = "CompteBancaire.findById", query = "SELECT c FROM CompteBancaire c WHERE c.id = :id")
+    ,
 @NamedQuery(name = "CompteBancaire.nbComptes", query = "SELECT COUNT(c) FROM CompteBancaire c")})
 
 public class CompteBancaire implements Serializable {
@@ -55,15 +57,21 @@ public class CompteBancaire implements Serializable {
 
     public CompteBancaire(float solde) {
         this.solde = solde;
+        OperationBancaire op = new OperationBancaire("Création du compte", solde);
+        operations.add(op);
     }
 
-    public void deposer(int montant) {
+    public void deposer(float montant) {
         solde += montant;
+        OperationBancaire op = new OperationBancaire("Depot", solde);
+        operations.add(op);
     }
 
-    public int retirer(int montant) {
+    public float retirer(float montant) {
         if (montant < solde) {
             solde -= montant;
+            OperationBancaire op = new OperationBancaire("Retrait", solde);
+            operations.add(op);
             return montant;
         } else {
             return 0;
@@ -109,24 +117,6 @@ public class CompteBancaire implements Serializable {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public float depot(float montant) {
-        if (montant < 0) {
-            montant = 0 - montant;
-        }
-
-        this.solde += montant;
-        return solde;
-    }
-
-    public float retrait(float montant) {
-        if (montant < 0) {
-            montant = 0 - montant;
-        }
-
-        solde -= montant;
-        return montant;
     }
 
     public float consultation() {
