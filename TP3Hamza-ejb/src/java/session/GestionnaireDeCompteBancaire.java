@@ -75,10 +75,6 @@ public CompteBancaire update(CompteBancaire compte) {
     update(destination);
   }
   
-  public void supprimer(CompteBancaire compteBancaire) {
-    em.remove(em.merge(compteBancaire));
-  }
-  
     public CompteBancaire getCompteByID(Long id){
         
         Query query = em.createNamedQuery("CompteBancaire.findById").setParameter("id", id);

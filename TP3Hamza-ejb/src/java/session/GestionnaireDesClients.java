@@ -28,6 +28,8 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class GestionnaireDesClients {
+    
+        @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
     
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -45,7 +47,7 @@ public class GestionnaireDesClients {
         return query.getResultList();
     }
     
-    public void createClient(String nom, String prenom,Date date, String adresse, String telephone, String mail, float solde){
+    public Client createClient(String nom, String prenom,Date date, String adresse, String telephone, String mail, float solde){
         Client client=new Client(nom, prenom,date, adresse, telephone, mail);
         
         CompteBancaire compte= new CompteBancaire(nom,solde);
@@ -56,8 +58,10 @@ public class GestionnaireDesClients {
         compte.setClient(client);
         client.getListeComptes().add(compte);
 
-        em.persist(client);
-        em.persist(compte);
+        persist(client);
+        persist(compte);
+        return client;
+        
     }
     
     public void addClient (Client client){

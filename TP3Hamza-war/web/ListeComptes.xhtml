@@ -9,9 +9,7 @@
 
     <ui:define name="top">
         <h1> Application de gestion de comptes bancaires </h1>
-        <h:form>
-            <h:commandButton value="Creation compte test" action="#{compteMBean.compteTest()}"/> 
-        </h:form>  
+
         <h:form>
             <h:commandButton value="Creation client test" action="#{clientMBean.clientTest()}"/> 
         </h:form>
@@ -40,7 +38,7 @@
                 </p:column>
 
                 <p:column headerText="Client">
-                    <h:outputText value="#{item.nom}"/> 
+                    <h:outputText value="#{item.nom} #{item.client.prenom} "/> 
                 </p:column>
 
                 <p:column headerText="Solde" sortBy="#{item.solde}">
@@ -60,7 +58,7 @@
                 <p:column headerText="Suppression" style="width: 20px">
                     <p:commandLink oncomplete="deleteDlg.show();">
                         <h:panelGroup styleClass="ui-icon ui-icon-trash" />
-                        <f:setPropertyActionListener value="#{item}" target="#{compteMBean.suppress()}" />
+                        <f:setPropertyActionListener value="#{item}" target="#{compteMBean.suppression()}" />
                     </p:commandLink>                 
                 </p:column>      
 

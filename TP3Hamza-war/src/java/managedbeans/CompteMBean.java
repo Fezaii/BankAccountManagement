@@ -160,20 +160,20 @@ public class CompteMBean implements Serializable {
         return "listeComptes?faces-redirect=true";
     }
 
-//    public String suppression() {
-//
-//        compteManager.delete(this.compte);
-//
-//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
-//
-//        FacesContext.getCurrentInstance().addMessage(null, message);
-//        return "listeComptes";
-//    }
+    public String suppression() {
 
+        compteManager.delete(this.compte);
+
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
+
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        return "listeComptes";
+    }
+/*
     public void suppress() {
         compteManager.delete(this.compte);
     }
-
+*/
     public String creerCompte() {
         compteManager.creerCompte(nom, solde);
         return "listeComptes?faces-redirect=true";
