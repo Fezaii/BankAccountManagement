@@ -43,6 +43,15 @@ public class CompteBancaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private float solde;
+    private String nom;
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<OperationBancaire> operations = new ArrayList();
@@ -55,12 +64,13 @@ public class CompteBancaire implements Serializable {
 
     }
 
-    public CompteBancaire(float solde) {
+
+    public CompteBancaire(String nom, float solde) {
         this.solde = solde;
+        this.nom = nom;
         OperationBancaire op = new OperationBancaire("Création du compte", solde);
         operations.add(op);
     }
-
     public void deposer(float montant) {
         solde += montant;
         OperationBancaire op = new OperationBancaire("Depot", solde);
@@ -78,9 +88,10 @@ public class CompteBancaire implements Serializable {
         }
     }
 
-    public CompteBancaire(Client client, float solde) {
+    public CompteBancaire(Client client, String nom, float solde) {
         this.client = client;
         this.solde = solde;
+        this.nom = nom;
     }
 
     public List<OperationBancaire> getOperations() {

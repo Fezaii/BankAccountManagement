@@ -35,13 +35,12 @@
                           rowStyleClass="#{compteBean.colorow(item.solde)}"
                           emptyMessage="Aucun compte bancaire trouvé." >
 
-
                 <p:column headerText="N° de compte">                                                        
                     <h:outputText value="#{item.id}"/>
-                </p:column>                               
+                </p:column>
 
                 <p:column headerText="Client">
-                    <h:outputText value="#{item.client.nom} #{item.client.prenom}"/> 
+                    <h:outputText value="#{item.nom}"/> 
                 </p:column>
 
                 <p:column headerText="Solde" sortBy="#{item.solde}">
@@ -61,7 +60,7 @@
                 <p:column headerText="Suppression" style="width: 20px">
                     <p:commandLink oncomplete="deleteDlg.show();">
                         <h:panelGroup styleClass="ui-icon ui-icon-trash" />
-                        <f:setPropertyActionListener value="#{item}" target="#{compteMBean.compte}" />
+                        <f:setPropertyActionListener value="#{item}" target="#{compteMBean.suppress()}" />
                     </p:commandLink>                 
                 </p:column>      
 

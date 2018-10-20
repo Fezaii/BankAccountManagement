@@ -7,6 +7,8 @@ package session;
 
 import entities.CompteBancaire;
 import entities.OperationBancaire;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -26,9 +28,10 @@ public class GestionnaireDeCompteBancaire {
 
     @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
-
-    public CompteBancaire creerCompte(int solde) {
-        CompteBancaire compte = new CompteBancaire(solde);
+    private GestionnaireDesClients gc;
+    
+    public CompteBancaire creerCompte(String nom,int solde) {
+        CompteBancaire compte = new CompteBancaire(nom,solde);
         persist(compte);
         return compte;
     }
@@ -40,10 +43,10 @@ public class GestionnaireDeCompteBancaire {
     }
 
     public String creerCompteTest() {
-        creerCompte(150000);
-        creerCompte(950000);
-        creerCompte(20000);
-        creerCompte(100000);
+        creerCompte("Olivier",150000);
+        creerCompte("Hamza",950000);
+        creerCompte("Niagara",20000);
+        creerCompte("Poulga",100000);
         return "liste_comptes";
     }
 
@@ -55,7 +58,7 @@ public CompteBancaire update(CompteBancaire compte) {
     }
     
     public CompteBancaire creerCompte(String nom, float solde){
-        CompteBancaire compte = new CompteBancaire(solde);
+        CompteBancaire compte = new CompteBancaire(nom,solde);
         creerOperation(compte, "Création du compte", solde);
         persist(compte);       
         return compte;
@@ -170,7 +173,8 @@ public CompteBancaire update(CompteBancaire compte) {
 
       
     public void creerComptesTest() {  
-     
+       //gc.createClient("John", "Lennon",Date.from(Instant.MIN),"Nice" ,"06200200", "john@beatles.com", 150000);  
+
        creerCompte("John Lennon", 150000);  
        creerCompte("Cartney", 950000);  
        creerCompte("Ringo Starr", 20000);  
