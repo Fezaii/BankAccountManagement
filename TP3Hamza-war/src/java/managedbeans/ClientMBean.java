@@ -49,7 +49,7 @@ public class ClientMBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création réussie !",  "Le client a été ajoutée.");  
           
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "ListeComptes";
+        return "ListeComptes?faces-redirect=true";
         
     }
     

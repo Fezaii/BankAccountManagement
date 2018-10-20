@@ -8,11 +8,17 @@
                 xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="top">
-        top
+        <h1> Application de gestion de comptes bancaires </h1>
+
     </ui:define>
 
     <ui:define name="left">
-        left
+        <div>
+            <a href="index.xhtml"> Accueil </a>
+        </div>
+        <div>
+            <a href="ListeComptes.xhtml"> Liste des comptes </a>
+        </div>
     </ui:define>
 
     <ui:define name="content">
@@ -50,7 +56,6 @@
                 </p:panel>
                 <h:panelGrid columns="2">
                     <p:commandButton id="valider" value="Valider" action="#{compteMBean.operationType}"/>
-                    <p:commandButton id="back" value="Retour" action="#{compteMBean.list()}"/>    
                 </h:panelGrid>
             </h:form>
         </f:view> 

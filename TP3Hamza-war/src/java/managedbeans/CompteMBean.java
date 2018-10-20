@@ -62,9 +62,6 @@ public class CompteMBean implements Serializable {
         return listeComptes;
     }
 
-    public void compteTest() {
-        compteManager.creerComptesTest();
-    }
 
     public float getMontant() {
         return montant;
@@ -121,14 +118,14 @@ public class CompteMBean implements Serializable {
      */
     public String showDetails(CompteBancaire compte) {
         this.compte = compte;
-        return "historiqueCompte?faces-redirect=true";
+        return "Historique?faces-redirect=true";
     }
 
     public String operation(CompteBancaire compte) {
 
         this.compte = compte;
 
-        return "operation?faces-redirect=true";
+        return "Operation?faces-redirect=true";
     }
 
     public String operationType() {
@@ -148,7 +145,7 @@ public class CompteMBean implements Serializable {
 
     public String retirerMontant() {
         compteManager.retirer(compte, montant);
-        return "listeComptes";
+        return "ListeComptes?faces-redirect=true";
     }
 
     public String transfertMontant() {
@@ -157,7 +154,7 @@ public class CompteMBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Virement réussi !", "Le viremenent a été effectué");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "listeComptes?faces-redirect=true";
+        return "ListeComptes?faces-redirect=true";
     }
 
     public String suppression() {
@@ -167,7 +164,7 @@ public class CompteMBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "listeComptes";
+        return "ListeComptes?faces-redirect=true";
     }
 /*
     public void suppress() {
@@ -188,7 +185,7 @@ public class CompteMBean implements Serializable {
     public String update() {
         System.out.println("###UPDATE###");
         compte = compteManager.update(compte);
-        return "listeComptes";
+        return "ListeComptes";
     }
 
     /**
@@ -197,8 +194,7 @@ public class CompteMBean implements Serializable {
      * @return
      */
     public String list() {
-        System.out.println("###LIST###");
-        return "listeComptes?faces-redirect=true";
+        return "ListeComptes?faces-redirect=true";
     }
 
     public String colorow(float solde) {

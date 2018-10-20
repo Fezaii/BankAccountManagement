@@ -167,38 +167,4 @@ public CompteBancaire update(CompteBancaire compte) {
         return c.getOperations();
     }
 
-      
-    public void creerComptesTest() {  
-       //gc.createClient("John", "Lennon",Date.from(Instant.MIN),"Nice" ,"06200200", "john@beatles.com", 150000);  
-
-       creerCompte("John Lennon", 150000);  
-       creerCompte("Cartney", 950000);  
-       creerCompte("Ringo Starr", 20000);  
-       creerCompte("Georges Harrisson", 100000); 
-       
-       creerCompte("Bob Dylan", 240000);  
-       creerCompte("Bob Marley", 1050000);  
-       creerCompte("Eric Clapton", 200000);  
-       creerCompte("Nightwish", 108090); 
-       
-       creerCompte("test1", 150020);  
-       creerCompte("test2", 950001);  
-       creerCompte("test3", 20030);  
-       creerCompte("test4", 100050); 
-       
-       creerCompte("test5", 150);  
-       creerCompte("test6", 9876);  
-       creerCompte("test7", 34);  
-       creerCompte("test8", 12); 
-       
-       creerCompte("test9", 8998700);  
-       creerCompte("test10", 11111);  
-       creerCompte("test11", 9888000);  
-       creerCompte("test12", 298098); 
-       
-       creerCompte("test13", 12300);  
-       creerCompte("test14", 123500);  
-       creerCompte("test15", 23490);  
-       creerCompte("test16", 10); 
-    }  
 }
