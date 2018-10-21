@@ -5,30 +5,24 @@
  */
 package entities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
 
-/**
- *
- * @author Hamza
- */
-@Entity
-public class Client extends Personne {
 
+public class Admin extends Personne {
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private List<CompteBancaire> listeComptes = new ArrayList();
+    private List<Client> listeClient = new ArrayList();
 
-    public Client() {
+    public List<Client> getListeClient() {
+        return listeClient;
+    }
+
+    public void setListeClient(List<Client> listeClient) {
+        this.listeClient = listeClient;
     }
 
     public List<CompteBancaire> getListeComptes() {
@@ -38,14 +32,13 @@ public class Client extends Personne {
     public void setListeComptes(List<CompteBancaire> listeComptes) {
         this.listeComptes = listeComptes;
     }
-
-    public Client(String name, String prenom, Date date, String adresse, String telephone, String mail) {
-        super(name, prenom, date, adresse, telephone, mail);
-    }
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private List<CompteBancaire> listeComptes = new ArrayList();
     
-    public Client(String name, String prenom, Date date, String adresse, String telephone, String mail,List<CompteBancaire> listeComptes) {
+    public Admin(String name, String prenom, Date date, String adresse, String telephone, String mail,List<Client> listeClient,List<CompteBancaire> listeComptes) {
         super(name, prenom, date, adresse, telephone, mail);
+        this.listeClient = listeClient;
         this.listeComptes = listeComptes;
     }
-
+    
 }
