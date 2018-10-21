@@ -14,15 +14,24 @@
         <div>
             <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
         </div>
-        <div>
-            <a href="faces/ListeOperations.xhtml"> Liste des operations </a>
-        </div>
+
     </ui:define>
 
     <ui:define name="content">
+        <h:form>
+
+            <br/>
+            Bienvenue dans BanqueRoute, l'application de gestion de comptes bancaires.
+            <br/>
+            Pour commencer vous pouvez générer les comptes de test !
+            <br/>
+            <br/>
+            <p:commandButton id="creerComptesTest" value="Générer les tests" action="#{clientBean.compteTest()}"/>
+
+        </h:form>
         <h1>Naviguez vers le menu a gauche !</h1>
 
-         
+
     </ui:define>
 
 </ui:composition>

@@ -135,7 +135,7 @@ public class CompteMBean implements Serializable {
 
         FacesContext.getCurrentInstance().addMessage(null, message);
 
-        return "listeComptes?faces-redirect=true";
+        return "ListeComptes?faces-redirect=true";
     }
 
     public String ajouterMontant() {
@@ -157,23 +157,19 @@ public class CompteMBean implements Serializable {
         return "ListeComptes?faces-redirect=true";
     }
 
-    public String suppression() {
-
-        compteManager.delete(this.compte);
-
+    public String suppression(CompteBancaire compte) {
+        
+        compteManager.delete(compte);
+        System.out.println("managedbeans.CompteMBean.suppression()");
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
         return "ListeComptes?faces-redirect=true";
     }
-/*
-    public void suppress() {
-        compteManager.delete(this.compte);
-    }
-*/
+
     public String creerCompte() {
         compteManager.creerCompte(nom, solde);
-        return "listeComptes?faces-redirect=true";
+        return "ListeComptes?faces-redirect=true";
     }
 
     /**

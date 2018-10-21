@@ -56,10 +56,12 @@
                 </p:column>
 
                 <p:column headerText="Suppression" style="width: 20px">
-                    <p:commandLink oncomplete="deleteDlg.show();">
+<!--                    <p:commandLink oncomplete="deleteDlg.show();">
                         <h:panelGroup styleClass="ui-icon ui-icon-trash" />
-                        <f:setPropertyActionListener value="#{item}" target="#{clientMBean.suppression()}" />
-                    </p:commandLink>                 
+                        <f:setPropertyActionListener value="" target="" />
+                    </p:commandLink>                 -->
+                <h:commandButton value="supprimer" 
+                                 action="#{compteMBean.suppression(item)}"/>
                 </p:column>      
 
             </p:dataTable>

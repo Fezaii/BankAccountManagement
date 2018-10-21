@@ -17,10 +17,10 @@
             <a href="index.xhtml"> Accueil </a>
         </div>
         <div>
-            <a href="/ListeComptes.xhtml"> Liste des comptes </a>
+            <a href="ListeComptes.xhtml"> Liste des comptes </a>
         </div>
         <div>
-            <a href="/AddClient.xhtml"> Ajouter un client </a>
+            <a href="AddClient.xhtml"> Ajouter un client </a>
         </div>
     </ui:define>
 
@@ -29,7 +29,8 @@
             <h:form>
                 <p:panel id="panel" header="Ajouter un nouveau client" style="margin-bottom:10px;">  
 
-                    <p:messages id="messages" /> 
+                    <p:messages id="messages" globalOnly="true"/>
+
                     <h:panelGrid columns="2">
 
                         <h:outputLabel value="Nom:" for="nom" />
