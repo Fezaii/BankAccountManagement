@@ -47,14 +47,16 @@ public class ClientMBean implements Serializable {
         managerClient.createClient(nom, prenom,dateNaiss, adresse, telephone, mail, solde);
         
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création réussie !",  "Le client a été ajoutée.");  
-          
         FacesContext.getCurrentInstance().addMessage(null, message);
+        
         return "ListeComptes?faces-redirect=true";
         
     }
     
     public void clientTest() throws ParseException{
         managerClient.creerClientTest();
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Creation des comptes test effectué avec succès!");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public String getNom() {
