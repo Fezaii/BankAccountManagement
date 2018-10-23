@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./DefaultTemplate.xhtml"
+>
+
+    <h:head>
+        <title> BanqueRoute - Connexion a un compte</title>
+    </h:head>
+
+        <ui:define name="content">
+            <f:view>
+                <h:form>
+                    <p:panel id="panel" header="Connexion" style="margin-bottom:10px;">  
+
+                        <p:messages id="messages" globalOnly="true"/>
+
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Username :" for="nom" />
+                            <p:inputText id="nom" value="" title="Nom" required="true"
+                                         requiredMessage="Veuillez saisir le nom" />
+
+                            <h:outputLabel value="Mot de passe :" for="password" />
+                            <p:password id="feedback" value="" feedback="true" required="true"/>
+
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Connexion" action="#{compteMBean.list()}" />
+                    </h:panelGrid>                
+                </h:form>
+
+            </f:view>
+        </ui:define>
+</ui:composition>
+

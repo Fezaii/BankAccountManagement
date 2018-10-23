@@ -18,9 +18,9 @@
         </div>
         <div>
             <a href="ListeComptes.xhtml"> Liste des comptes </a>
-        </div>
+        </div>      
         <div>
-            <a href="AddClient.xhtml"> Ajouter un client </a>
+            <a href="Virement.xhtml"> Effectuer un virement </a>
         </div>
     </ui:define>
 
@@ -57,8 +57,6 @@
                         <h:outputLabel value="Solde:" for="solde" />
                         <p:spinner id="solde" value="#{clientMBean.solde}" prefix="€" required="true"
                                    requiredMessage="Veuillez saisir le solde" />  
-
-
                     </h:panelGrid>
                 </p:panel>
 

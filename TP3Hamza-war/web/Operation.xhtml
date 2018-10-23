@@ -27,7 +27,7 @@
             <h:form>
                 <p:panel id="panel" header="Effectuer une opération" style="margin-bottom:10px;">  
 
-                    Opérations sur le compte n° #{compteMBean.compte.id} de #{compteMBean.compte.client.nom} #{compteMBean.compte.client.prenom} 
+                    Opérations sur le compte n° #{compteMBean.compte.id} de #{compteMBean.nom} #{compteMBean.compte.prenom} 
 
                     <br/>
                     <br/>
@@ -55,7 +55,7 @@
 
                 </p:panel>
                 <h:panelGrid columns="2">
-                    <p:commandButton id="valider" value="Valider" action="#{compteMBean.operationType}"/>
+                    <p:commandButton id="valider" value="Valider" action="#{compteMBean.operationType()}"/>
                 </h:panelGrid>
             </h:form>
         </f:view> 

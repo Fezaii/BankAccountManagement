@@ -12,13 +12,22 @@
 
     <ui:define name="left">
         <div>
+            <a href="index.xhtml"> Accueil </a>
+        </div>
+        <div>
             <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
         </div>
-
+        <div>
+            <a href="faces/AddClient.xhtml"> Ajouter un client </a>
+        </div>        
+        <div>
+            <a href="faces/Virement.xhtml"> Effectuer un virement </a>
+        </div>
     </ui:define>
 
     <ui:define name="content">
         <h:form>
+            <p:growl id="growl" life="5000" showDetail="true"/>
 
             <br/>
             Bienvenue dans BanqueRoute, l'application de gestion de comptes bancaires.
@@ -26,10 +35,10 @@
             Pour commencer vous pouvez générer les comptes de test !
             <br/>
             <br/>
-            <p:commandButton id="creerComptesTest" value="Générer les tests" action="#{clientBean.compteTest()}"/>
+            <p:commandButton id="creerComptesTest" update="growl" value="Générer les comptes" action="#{clientMBean.clientTest()}"/>
 
         </h:form>
-        <h1>Naviguez vers le menu a gauche !</h1>
+        <h1>Naviguez avec le menu a gauche !</h1>
 
 
     </ui:define>

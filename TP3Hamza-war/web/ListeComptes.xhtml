@@ -10,12 +10,6 @@
     <ui:define name="top">
         <h1> Application de gestion de comptes bancaires </h1>
         <br></br>
-        <h:form>
-            <h:commandButton value="Creation client test" action="#{clientMBean.clientTest()}"/> 
-        </h:form>
-        <h:form>
-            <h:commandButton value="Ajouter client" action="/AddClient.xhtml"/> 
-        </h:form>
     </ui:define>
 
     <ui:define name="left">
@@ -25,12 +19,23 @@
         <div>
             <a href="ListeComptes.xhtml"> Liste des comptes </a>
         </div>
+        <div>
+            <a href="AddClient.xhtml"> Ajouter un client </a>
+        </div>        
+        <div>
+            <a href="Virement.xhtml"> Effectuer un virement </a>
+        </div>
+        <div>
+            <a href="Connexion.xhtml"> Connexion </a>
+        </div>
+        <div>
+            <a href="Register.xhtml"> Inscription </a>
+        </div>
     </ui:define>
     <ui:define name="content">
         <h:body>
             <p:dataTable  id="cTable" value="#{compteMBean.comptes}" var="item" paginator="true" rows="10"
                           rowsPerPageTemplate="10,20"
-                          rowStyleClass="#{compteBean.colorow(item.solde)}"
                           emptyMessage="Aucun compte bancaire trouvé." >
 
                 <p:column headerText="N° de compte">                                                        
@@ -48,21 +53,19 @@
                 </p:column>
 
                 <p:column headerText="Historique">
-                    <p:commandButton action="#{compteMBean.showDetails(item)}" icon="ui-icon-search"/>                                  
+                    <input type="button" value="New" onclick="#{compteMBean.showDetails(item)}">  </input>
+
+<!--                    <p:commandButton action="#{compteMBean.showDetails(item)}" icon="ui-icon-search"/>                                  -->
                 </p:column>
 
-                <p:column headerText="Opérations">
-                    <p:commandButton action="#{compteMBean.operation(item)}" icon="ui-icon-pencil"/>                                  
+                <p:column headerText="Opération">
+                    <input type="button" value="New" onclick="#{compteMBean.operation()}">  </input>
+
                 </p:column>
 
-                <p:column headerText="Suppression" style="width: 20px">
-<!--                    <p:commandLink oncomplete="deleteDlg.show();">
-                        <h:panelGroup styleClass="ui-icon ui-icon-trash" />
-                        <f:setPropertyActionListener value="" target="" />
-                    </p:commandLink>                 -->
-                <h:commandButton value="supprimer" 
-                                 action="#{compteMBean.suppression(item)}"/>
-                </p:column>      
+                <p:column headerText="Suppression" >
+                    <p:commandButton action="#{compteMBean.suppression(item)}" update="cTable" icon="ui-icon ui-icon-trash"/>
+                </p:column>
 
             </p:dataTable>
         </h:body>
