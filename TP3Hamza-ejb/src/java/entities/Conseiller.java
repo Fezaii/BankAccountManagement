@@ -35,7 +35,11 @@ import javax.persistence.Temporal;
  * @author fezai
  */
 @Entity
-public class Conseiller extends Personne {
+public class Conseiller extends Personne implements Serializable{
+
+    public Conseiller() {
+    }
+    
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<Client> listeClient = new ArrayList();
 
@@ -43,11 +47,12 @@ public class Conseiller extends Personne {
         return listeClient;
     }
 
-    public void setListeClient(List<Client> listeClient) {
-        this.listeClient = listeClient;
+    public void setListeClient(Client client) {
+        this.listeClient.add(client);
     }
-    public Conseiller(String name, String prenom, Date date, String adresse, String telephone, String mail,List<Client> listeClient) {
+    
+    public Conseiller(String name, String prenom, Date date, String adresse, String telephone, String mail) {
         super(name,prenom,date,adresse,telephone,mail);
-        this.listeClient = listeClient;        
+        this.role = Role.CONSEILER;       
     }
 }

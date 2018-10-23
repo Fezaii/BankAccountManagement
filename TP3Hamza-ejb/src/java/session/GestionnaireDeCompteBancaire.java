@@ -28,41 +28,31 @@ public class GestionnaireDeCompteBancaire {
 
     @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
-    private GestionnaireDesClients gc;
+   
     
-    public CompteBancaire creerCompte(String nom,int solde) {
-        CompteBancaire compte = new CompteBancaire(nom,solde);
+    public CompteBancaire creerCompte(int solde) {
+        CompteBancaire compte = new CompteBancaire(solde);
         persist(compte);
         return compte;
     }
 
-    public List<CompteBancaire> getAllComptes() {
-        Query query = em.createNamedQuery("CompteBancaire.findAll");
-        List<CompteBancaire> liste = query.getResultList();
-        return liste;
-    }
 
     public String creerCompteTest() {
-        creerCompte("Olivier",150000);
-        creerCompte("Hamza",950000);
-        creerCompte("Niagara",20000);
-        creerCompte("Poulga",100000);
+        creerCompte(150000);
+        creerCompte(950000);
+        creerCompte(20000);
+        creerCompte(100000);
         return "liste_comptes";
     }
 
     public void persist(Object object) {
         em.persist(object);
     }
-public CompteBancaire update(CompteBancaire compte) {
+    
+    public CompteBancaire update(CompteBancaire compte) {
         return em.merge(compte);
     }
     
-    public CompteBancaire creerCompte(String nom, float solde){
-        CompteBancaire compte = new CompteBancaire(nom,solde);
-        creerOperation(compte, "Création du compte", solde);
-        persist(compte);       
-        return compte;
-    }
    
       public void transferer(CompteBancaire source, CompteBancaire destination, float montant) {
     float val = source.retirer(montant);
@@ -93,12 +83,7 @@ public CompteBancaire update(CompteBancaire compte) {
         }
     }
     
-    public int getNBComptes(){
-        Query query = em.createNamedQuery("CompteBancaire.nbComptes");
-        
-        return ((Long) query.getSingleResult()).intValue();
-    }
-    
+   
     /**
      * Supprimer un compte bancaire
      * @param compte 

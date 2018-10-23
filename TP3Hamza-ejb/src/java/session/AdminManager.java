@@ -5,9 +5,11 @@
  */
 package session;
 
+import entities.Admin;
 import entities.Client;
 import entities.CompteBancaire;
 import entities.OperationBancaire;
+import entities.Role;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,47 +25,36 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Hamza
+ * @author fezai
  */
 @Stateless
 @LocalBean
-public class GestionnaireDesClients {
-    
-    @PersistenceContext(unitName = "TP3Hamza-ejbPU")
+public class AdminManager {
+
+  @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
     
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
     
+ 
     public void persist(Object object) {
         em.persist(object);
     }
 
-    /*public List<Client> getAllClient(){
-        Query query = em.createQuery("SELECT c FROM Client c");
+    public List<Client> getAllClient(){
+        Query query = em.createNamedQuery("Personne.findByRole").setParameter("role",Role.CLIENT);
         return query.getResultList();
-    }*/
+    }
     
-    public Client createClient(String nom, String prenom,Date date, String adresse, String telephone, String mail, float solde){
-        Client client=new Client(nom, prenom,date, adresse, telephone, mail);
-        
-        /*CompteBancaire compte= new CompteBancaire(nom,solde);
-        
-        OperationBancaire operation = new OperationBancaire("Création du compte", solde);
-        compte.getOperations().add(operation);
-        
-        compte.setClient(client);
-        client.getListeComptes().add(compte);
-
-        persist(client);
-        persist(compte);*/
-        persist(client);
-        return client;
-        
+    public Admin createAdmin(String nom, String prenom,Date date, String adresse, String telephone, String mail){
+        Admin admin=new Admin(nom, prenom,date, adresse, telephone, mail);
+        persist(admin);
+        return admin;    
     }
     
     /*public void addClient (Client client){
         em.persist(client);
-    }*
+    }
     
     public Client findClientByID(Long id){
         Query query = em.createQuery("SELECT c FROM Client c WHERE c.id =: id");
@@ -83,19 +74,14 @@ public class GestionnaireDesClients {
 
             return clients.get(0);
         }
-    }*/
+    }
     
     /**
      * Creer des clients test
      */
-    public void creerClientTest() throws ParseException {  
-        createClient("John", "Lennon",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com", 150000);  
-        createClient("Paul", "Mac Cartney",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com", 950000);  
-        createClient("Ringo", "Starr",simpleDateFormat.parse("1940/07/07"),"Londre","06333980", "ringo@beatles.com", 20000);  
-        createClient("Georges", "Harrisson",simpleDateFormat.parse("1943/02/25"),"Paris","07966098", "georges@beatles.com", 100000);
-        createClient("Hala","Ghoualmi",simpleDateFormat.parse("1988/01/13"),"Nice","07218218","hala@beatles.ca",123000);
- 
+    public void creerAdminTest() throws ParseException {  
+        createAdmin("fezai", "Ahmed",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com");  
+        createAdmin("boudardar", "hamza",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com");  
     }
     
-
 }

@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
@@ -23,9 +24,9 @@ import javax.persistence.Temporal;
  * @author Hamza
  */
 @Entity
-public class Client extends Personne {
+public class Client extends Personne implements Serializable{
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<CompteBancaire> listeComptes = new ArrayList();
 
     public Client() {
@@ -35,17 +36,13 @@ public class Client extends Personne {
         return listeComptes;
     }
 
-    public void setListeComptes(List<CompteBancaire> listeComptes) {
-        this.listeComptes = listeComptes;
+    public void setListeComptes(CompteBancaire compte) {
+        this.listeComptes.add(compte);
     }
 
     public Client(String name, String prenom, Date date, String adresse, String telephone, String mail) {
         super(name, prenom, date, adresse, telephone, mail);
-    }
-    
-    public Client(String name, String prenom, Date date, String adresse, String telephone, String mail,List<CompteBancaire> listeComptes) {
-        super(name, prenom, date, adresse, telephone, mail);
-        this.listeComptes = listeComptes;
+        this.role = Role.CLIENT;
     }
 
 }

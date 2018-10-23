@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,11 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "COMPTEBANCAIRE")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c ORDER BY c.id")
-    ,
-@NamedQuery(name = "CompteBancaire.findById", query = "SELECT c FROM CompteBancaire c WHERE c.id = :id")
-    ,
-@NamedQuery(name = "CompteBancaire.nbComptes", query = "SELECT COUNT(c) FROM CompteBancaire c")})
+        @NamedQuery(name = "CompteBancaire.findAll", query = "SELECT c FROM CompteBancaire c ORDER BY c.id")
+        ,@NamedQuery(name = "CompteBancaire.findById", query = "SELECT c FROM CompteBancaire c WHERE c.id = :id")})
 
 public class CompteBancaire implements Serializable {
 
@@ -43,31 +41,27 @@ public class CompteBancaire implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private float solde;
-    private String nom;
 
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
+    public CompteBancaire() {
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private List<OperationBancaire> operations = new ArrayList();
 
-    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private Client client;
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    private List<Client> listeClient = new ArrayList();
 
-    public CompteBancaire() {
-        client = new Client();
-
+    public List<Client> getListeClient() {
+        return listeClient;
     }
 
+    public void setListeClient(Client client) {
+        this.listeClient.add(client);
+    }
 
-    public CompteBancaire(String nom, float solde) {
+ 
+    public CompteBancaire(float solde) {
         this.solde = solde;
-        this.nom = nom;
         OperationBancaire op = new OperationBancaire("Création du compte", solde);
         operations.add(op);
     }
@@ -88,22 +82,12 @@ public class CompteBancaire implements Serializable {
         }
     }
 
-    public CompteBancaire(Client client, String nom, float solde) {
-        this.client = client;
-        this.solde = solde;
-        this.nom = nom;
-    }
-
     public List<OperationBancaire> getOperations() {
-        return operations;
+        return this.operations;
     }
 
-    public void setOperations(List<OperationBancaire> operations) {
-        this.operations = operations;
-    }
-
-    public void addOperationBancaire(OperationBancaire op) {
-        operations.add(op);
+    public void setOperations(OperationBancaire op) {
+        this.operations.add(op);
     }
 
     public Long getId() {
@@ -121,19 +105,7 @@ public class CompteBancaire implements Serializable {
     public void setSolde(int solde) {
         this.solde = solde;
     }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public float consultation() {
-        return solde;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

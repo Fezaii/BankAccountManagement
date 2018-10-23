@@ -7,17 +7,31 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 /**
  *
  * @author fezai
  */
-@Entity
+@Entity(name="Personne")
+@NamedQueries({
+    @NamedQuery(name = "Personne.findAll", query = "SELECT p FROM Personne p")
+    , @NamedQuery(name = "Personne.findById", query = "SELECT p FROM Personne p WHERE p.id = :id")
+    , @NamedQuery(name = "Personne.findByNom", query = "SELECT p FROM Personne p WHERE p.nom = :nom")
+    , @NamedQuery(name = "Personne.findByPrenom", query = "SELECT p FROM Personne p WHERE p.prenom = :prenom")
+    , @NamedQuery(name = "Personne.findByRole", query = "SELECT p FROM Personne p WHERE p.role = :role")
+    , @NamedQuery(name = "Personne.findBytelephone", query = "SELECT p FROM Personne p WHERE p.telephone = :telephone")
+    , @NamedQuery(name = "Personne.findBymail", query = "SELECT p FROM Personne p WHERE p.mail = :mail")
+    , @NamedQuery(name = "Personne.deleteById", query = "DELETE FROM Personne p WHERE p.id = :id")})
 public class Personne implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,6 +45,16 @@ public class Personne implements Serializable {
     protected String adresse;
     protected String telephone;
     protected String mail;
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    protected Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public Personne() {
     }
