@@ -5,18 +5,17 @@
  */
 package managedbeans;
 
+import entities.Client;
 import entities.CompteBancaire;
 import entities.OperationBancaire;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.persistence.EntityManager;
-import org.primefaces.context.RequestContext;
 import session.GestionnaireDeCompteBancaire;
 
 /**
@@ -36,23 +35,7 @@ public class CompteMBean implements Serializable {
      * pour faire une mise à jour du compte modifié dans la base */
     private EntityManager em;
     private Long idDebiteur;
-
-    public void setIdDebiteur(Long idDebiteur) {
-        this.idDebiteur = idDebiteur;
-    }
-
-    public void setIdCrediteur(Long idCrediteur) {
-        this.idCrediteur = idCrediteur;
-    }
     private Long idCrediteur;
-
-    public Long getIdDebiteur() {
-        return idDebiteur;
-    }
-
-    public Long getIdCrediteur() {
-        return idCrediteur;
-    }
     private float montant = 0;
     private int op;
 
@@ -74,11 +57,14 @@ public class CompteMBean implements Serializable {
     public void setCompte(CompteBancaire compte) {
         this.compte = compte;
     }
-
-    public List<CompteBancaire> getComptes() {
+    public List<Client> getListeClient(long id) {
+        return compteManager.getListeClient(id);
+    }
+    /*public List<CompteBancaire> getComptes() {
         listeComptes = compteManager.getAllComptes();
         return listeComptes;
-    }
+    }*/
+
 
     public float getMontant() {
         return montant;
@@ -134,13 +120,14 @@ public class CompteMBean implements Serializable {
      * @return
      */
     public String showDetails(CompteBancaire compte) {
-        System.out.println("managedbeans.CompteMBean.showDetails()");
         this.compte = compte;
         return "Historique?faces-redirect=true";
     }
 
-    public String operation() {
-        System.out.println("managedbeans.CompteMBean.operation()");
+    public String operation(CompteBancaire compte) {
+
+        this.compte = compte;
+
         return "Operation?faces-redirect=true";
     }
 
@@ -173,34 +160,18 @@ public class CompteMBean implements Serializable {
         return "ListeComptes?faces-redirect=true";
     }
 
-    public String transfert() {
-        CompteBancaire source = compteManager.getCompteByID(idDebiteur);
-        CompteBancaire dest = compteManager.getCompteByID(idCrediteur);
-        source.retirer(montant);
-        dest.deposer(montant);
-        compteManager.update(source);
-        compteManager.update(dest);
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Transfert effectué avec succès!");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        //FacesContext.getCurrentInstance().getExternalContext().getFlash().setRedirect(true);
-        //FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-
-        //RequestContext.getCurrentInstance().showMessageInDialog(message);
-        return "ListeComptes?faces-redirect=true";
-
-    }
-
     public String suppression(CompteBancaire compte) {
-        System.out.println("managedbeans.CompteMBean.suppression()");
+        
         compteManager.delete(compte);
+        System.out.println("managedbeans.CompteMBean.suppression()");
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "ListeComptes";
+        return "ListeComptes?faces-redirect=true";
     }
 
     public String creerCompte() {
-        compteManager.creerCompte(nom, solde);
+        compteManager.creerCompte((int) solde);
         return "ListeComptes?faces-redirect=true";
     }
 
