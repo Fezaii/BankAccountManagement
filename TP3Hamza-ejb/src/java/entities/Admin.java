@@ -19,8 +19,8 @@ public class Admin extends Personne implements Serializable{
 
     public Admin() {
     }
-    public Admin(String name, String prenom, Date date, String adresse, String telephone, String mail) {
-        super(name, prenom, date, adresse, telephone, mail);
+    public Admin(String name, String prenom, Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse) {
+        super(name, prenom, date, adresse, telephone, mail,identifiant,motdepasse);
         this.role = Role.ADMIN;
     }
     

@@ -5,6 +5,7 @@
  */
 package session;
 
+import entities.Client;
 import entities.CompteBancaire;
 import entities.OperationBancaire;
 import java.time.Instant;
@@ -36,14 +37,16 @@ public class GestionnaireDeCompteBancaire {
         return compte;
     }
 
-
-    public String creerCompteTest() {
+    public List<Client> getListeClient(long id) {
+        return getCompteByID(id).getListeClient();
+    }
+    /*public String creerCompteTest() {
         creerCompte(150000);
         creerCompte(950000);
         creerCompte(20000);
         creerCompte(100000);
         return "liste_comptes";
-    }
+    }*/
 
     public void persist(Object object) {
         em.persist(object);
@@ -54,7 +57,7 @@ public class GestionnaireDeCompteBancaire {
     }
     
    
-      public void transferer(CompteBancaire source, CompteBancaire destination, float montant) {
+    public void transferer(CompteBancaire source, CompteBancaire destination, float montant) {
     float val = source.retirer(montant);
     if (val == 0) {
 
@@ -70,17 +73,6 @@ public class GestionnaireDeCompteBancaire {
         Query query = em.createNamedQuery("CompteBancaire.findById").setParameter("id", id);
        
         return (CompteBancaire) query.getSingleResult();
-    }
-    
-    public CompteBancaire getCompteByName(String nom){
-        
-        Query query = em.createNamedQuery("CompteBancaire.findByName").setParameter("nom", nom);
-        if(query.getResultList().size() > 0) {
-            return (CompteBancaire)query.getSingleResult();
-        }
-        else {
-            return null;
-        }
     }
     
    
@@ -104,7 +96,7 @@ public class GestionnaireDeCompteBancaire {
   
     public CompteBancaire deposer(CompteBancaire compte, float montant){
         compte.deposer(montant);
-        creerOperation(compte, "Dépot", montant);
+        //creerOperation(compte, "Dépot", montant);
         em.merge(compte);
         
         return update (compte);
@@ -112,7 +104,7 @@ public class GestionnaireDeCompteBancaire {
     
     public CompteBancaire retirer(CompteBancaire compte, float montant){
         compte.retirer(montant);
-        creerOperation(compte, "Retrait", montant);
+        //creerOperation(compte, "Retrait", montant);
         em.merge(compte);
         return update (compte);
     }
@@ -141,8 +133,8 @@ public class GestionnaireDeCompteBancaire {
         compteDebiteur.retirer(montant);
         compteCrediteur.deposer(montant);
         
-        creerOperation(compteDebiteur, "Virement effectué à "+compteCrediteur.getClient().getNom()+"-"+compteCrediteur.getClient().getPrenom(), montant);
-        creerOperation(compteCrediteur, "Virement reçu de "+ compteDebiteur.getClient().getNom()+"-"+compteDebiteur.getClient().getPrenom(), montant);
+        creerOperation(compteDebiteur, "Virement effectué à "+compteCrediteur.getListeClient().get(0).getNom()+"-"+compteCrediteur.getListeClient().get(0).getPrenom(), montant);
+        creerOperation(compteCrediteur, "Virement reçu de "+ compteDebiteur.getListeClient().get(0).getNom()+"-"+compteDebiteur.getListeClient().get(0).getPrenom(), montant);
         
         em.merge(compteDebiteur);
         em.merge(compteCrediteur);

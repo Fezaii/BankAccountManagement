@@ -8,7 +8,9 @@ package session;
 import entities.Admin;
 import entities.Client;
 import entities.CompteBancaire;
+import entities.Conseiller;
 import entities.OperationBancaire;
+import entities.Personne;
 import entities.Role;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,7 +33,7 @@ import javax.persistence.Query;
 @LocalBean
 public class AdminManager {
 
-  @PersistenceContext(unitName = "TP3Hamza-ejbPU")
+    @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
     
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -45,15 +47,55 @@ public class AdminManager {
         Query query = em.createNamedQuery("Personne.findByRole").setParameter("role",Role.CLIENT);
         return query.getResultList();
     }
-    
-    public Admin createAdmin(String nom, String prenom,Date date, String adresse, String telephone, String mail){
-        Admin admin=new Admin(nom, prenom,date, adresse, telephone, mail);
+    public List<Conseiller> getAllConseiller(){
+        Query query = em.createNamedQuery("Personne.findByRole").setParameter("role",Role.CONSEILER);
+        return query.getResultList();
+    }
+    public List<CompteBancaire> getAllComptes(){
+        Query query = em.createNamedQuery("CompteBancaire.findAll");
+        return query.getResultList();
+    }
+    public Admin createAdmin(String nom, String prenom,Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse){
+        Admin admin=new Admin(nom, prenom,date, adresse, telephone, mail,identifiant,motdepasse);
         persist(admin);
         return admin;    
     }
+    public void deleteClient(Client client) {
+        Query query = em.createNamedQuery("Personne.deleteById",Personne.class);
+        query.setParameter("id",client.getId());
+        query.executeUpdate();    
+    }
+    public Client getClientById(int id){
+        Query query = em.createNamedQuery("Personne.findById").setParameter("id",id);
+        return (Client)query.getSingleResult();    
+    }
     
+    public void deleteConseiller(Personne conseiller) {
+        
+    if (!em.contains(conseiller)) {
+        conseiller = em.merge(conseiller);
+    }
+    em.remove(conseiller);
+        
+        /*Query query = em.createNamedQuery("Personne.deleteById",Personne.class);
+        query.setParameter("id",conseiller.getId());
+        query.executeUpdate();*/    
+    }
+    public Personne getConseillerById(long id){
+        Query query = em.createNamedQuery("Personne.findById").setParameter("id",id);
+        return (Personne)query.getSingleResult();    
+    }
+    
+    public Personne getPersonneByIdentifiant(String identifiant){
+        Query query = em.createNamedQuery("Personne.findByidentifiant").setParameter("identifiant",identifiant);
+        return (Personne)query.getSingleResult();    
+    }
     /*public void addClient (Client client){
         em.persist(client);
+    }
+        public Personne getConseillerById(long id){
+        Query query = em.createNamedQuery("Personne.findById").setParameter("id",id);
+        return (Personne)query.getSingleResult();    
     }
     
     public Client findClientByID(Long id){
@@ -80,8 +122,7 @@ public class AdminManager {
      * Creer des clients test
      */
     public void creerAdminTest() throws ParseException {  
-        createAdmin("fezai", "Ahmed",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com");  
-        createAdmin("boudardar", "hamza",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com");  
+        createAdmin("fezai", "ahmed",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com","admin","admin2018");  
     }
     
 }

@@ -7,7 +7,9 @@ package session;
 
 import entities.Client;
 import entities.CompteBancaire;
+import entities.Conseiller;
 import entities.OperationBancaire;
+import entities.Role;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,26 +39,34 @@ public class GestionnaireDesClients {
     public void persist(Object object) {
         em.persist(object);
     }
-
+    
+    public Conseiller getPersonneById(int id){
+        
+        Query query = em.createNamedQuery("Personne.findById").setParameter("id",id);
+        return (Conseiller)query.getSingleResult();    
+    }
     /*public List<Client> getAllClient(){
         Query query = em.createQuery("SELECT c FROM Client c");
         return query.getResultList();
     }*/
     
-    public Client createClient(String nom, String prenom,Date date, String adresse, String telephone, String mail, float solde){
-        Client client=new Client(nom, prenom,date, adresse, telephone, mail);
+    public Client createClient(String nom, String prenom,Date date, String adresse, String telephone, String mail, float solde,int consid,String identifiant,String motdepasse){
+        Client client=new Client(nom, prenom,date, adresse, telephone, mail,identifiant,motdepasse);
         
-        /*CompteBancaire compte= new CompteBancaire(nom,solde);
+        Conseiller cons = getPersonneById(consid);
+        
+        CompteBancaire compte= new CompteBancaire(solde);
+    
         
         OperationBancaire operation = new OperationBancaire("Création du compte", solde);
-        compte.getOperations().add(operation);
-        
-        compte.setClient(client);
-        client.getListeComptes().add(compte);
+        compte.setOperations(operation);
+        cons.setListeClient(client);
+        compte.setListeClient(client);
+        client.setListeComptes(compte);
 
         persist(client);
-        persist(compte);*/
-        persist(client);
+        persist(compte);
+        persist(cons);
         return client;
         
     }
@@ -89,11 +99,11 @@ public class GestionnaireDesClients {
      * Creer des clients test
      */
     public void creerClientTest() throws ParseException {  
-        createClient("John", "Lennon",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com", 150000);  
-        createClient("Paul", "Mac Cartney",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com", 950000);  
-        createClient("Ringo", "Starr",simpleDateFormat.parse("1940/07/07"),"Londre","06333980", "ringo@beatles.com", 20000);  
-        createClient("Georges", "Harrisson",simpleDateFormat.parse("1943/02/25"),"Paris","07966098", "georges@beatles.com", 100000);
-        createClient("Hala","Ghoualmi",simpleDateFormat.parse("1988/01/13"),"Nice","07218218","hala@beatles.ca",123000);
+        createClient("John", "Lennon",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com", 150000,3,"client","client2018");  
+        createClient("Paul", "Mac Cartney",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com", 950000,3,"client1","client2019");  
+        createClient("Ringo", "Starr",simpleDateFormat.parse("1940/07/07"),"Londre","06333980", "ringo@beatles.com", 20000,3,"client2","blbla");  
+        createClient("Georges", "Harrisson",simpleDateFormat.parse("1943/02/25"),"Paris","07966098", "georges@beatles.com", 100000,3,"client3","blba");
+        createClient("Hala","Ghoualmi",simpleDateFormat.parse("1988/01/13"),"Nice","07218218","hala@beatles.ca",123000,3,"client4","blabla");
  
     }
     

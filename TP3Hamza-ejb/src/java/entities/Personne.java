@@ -31,6 +31,7 @@ import javax.persistence.Temporal;
     , @NamedQuery(name = "Personne.findByRole", query = "SELECT p FROM Personne p WHERE p.role = :role")
     , @NamedQuery(name = "Personne.findBytelephone", query = "SELECT p FROM Personne p WHERE p.telephone = :telephone")
     , @NamedQuery(name = "Personne.findBymail", query = "SELECT p FROM Personne p WHERE p.mail = :mail")
+    , @NamedQuery(name = "Personne.findByidentifiant", query = "SELECT p FROM Personne p WHERE p.identifiant = :identifiant")    
     , @NamedQuery(name = "Personne.deleteById", query = "DELETE FROM Personne p WHERE p.id = :id")})
 public class Personne implements Serializable {
 
@@ -40,12 +41,30 @@ public class Personne implements Serializable {
     protected Long id;
     protected String nom;
     protected String prenom;
+    protected String identifiant;
+    protected String motdepasse;
+
+    public String getIdentifiant() {
+        return identifiant;
+    }
+
+    public void setIdentifiant(String identifiant) {
+        this.identifiant = identifiant;
+    }
+
+    public String getMotdepasse() {
+        return motdepasse;
+    }
+
+    public void setMotdepasse(String motdepasse) {
+        this.motdepasse = motdepasse;
+    }
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Date dateNaissance;
     protected String adresse;
     protected String telephone;
     protected String mail;
-    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    //@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     protected Role role;
 
     public Role getRole() {
@@ -59,13 +78,15 @@ public class Personne implements Serializable {
     public Personne() {
     }
     
-    public Personne(String nom, String prenom, Date date, String adresse, String telephone, String mail) {
+    public Personne(String nom, String prenom, Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = date;
         this.adresse = adresse;
         this.telephone = telephone;
         this.mail = mail;
+        this.identifiant = identifiant;
+        this.motdepasse = motdepasse;
     }
   
     public String getPrenom() {

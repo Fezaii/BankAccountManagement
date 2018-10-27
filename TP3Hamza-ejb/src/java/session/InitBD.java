@@ -31,22 +31,30 @@ public class InitBD {
     private GestionnaireDesClients gg;
     @EJB
     private AdminManager ad;
+    @EJB
+    private ConseillerManager co;
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @PostConstruct
     public void initBase(){
         System.out.println("#### BD REMPLIE ###");
-        gc.creerCompteTest();
-        try {
-            gg.creerClientTest();
-        } catch (ParseException ex) {
-            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //gc.creerCompteTest();
         try {
             ad.creerAdminTest();
         } catch (ParseException ex) {
             Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try {
+            co.creerConseillerTest();
+        } catch (ParseException ex) {
+            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            gg.creerClientTest();
+        } catch (ParseException ex) {
+            Logger.getLogger(InitBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

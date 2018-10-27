@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -23,13 +24,13 @@ import javax.persistence.Query;
  *
  * @author fezai
  */
-@Stateless
+@Stateful
 @LocalBean
 public class ConseillerManager {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-  @PersistenceContext(unitName = "TP3Hamza-ejbPU")
+    @PersistenceContext(unitName = "TP3Hamza-ejbPU")
     private EntityManager em;
     
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -40,17 +41,17 @@ public class ConseillerManager {
     }
 
  
-    public Conseiller createConseiller(String nom, String prenom,Date date, String adresse, String telephone, String mail){
-        Conseiller conseiller=new Conseiller(nom, prenom,date, adresse, telephone, mail);
+    public Conseiller createConseiller(String nom, String prenom,Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse){
+        Conseiller conseiller=new Conseiller(nom, prenom,date, adresse, telephone, mail,identifiant,motdepasse);
         persist(conseiller);
         return conseiller;    
     }
-    
+
     /**
      * Creer des clients test
      */
     public void creerConseillerTest() throws ParseException {  
-        createConseiller("ahmed", "Ahmed",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com");  
-        createConseiller("hamza", "hamza",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com");  
+        createConseiller("thomas", "laporte",simpleDateFormat.parse("1940/10/09"),"Nice" ,"06200200", "john@beatles.com","conseiller","conseiller2018");  
+        createConseiller("boudradar", "hamza",simpleDateFormat.parse("1942/09/18"),"Paris","07800800", "paul@beatles.com","conseiller1","conseiller2019");  
     }
 }

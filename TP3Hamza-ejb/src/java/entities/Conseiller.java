@@ -40,7 +40,7 @@ public class Conseiller extends Personne implements Serializable{
     public Conseiller() {
     }
     
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
     private List<Client> listeClient = new ArrayList();
 
     public List<Client> getListeClient() {
@@ -51,8 +51,8 @@ public class Conseiller extends Personne implements Serializable{
         this.listeClient.add(client);
     }
     
-    public Conseiller(String name, String prenom, Date date, String adresse, String telephone, String mail) {
-        super(name,prenom,date,adresse,telephone,mail);
+    public Conseiller(String name, String prenom, Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse) {
+        super(name,prenom,date,adresse,telephone,mail,identifiant,motdepasse);
         this.role = Role.CONSEILER;       
     }
 }

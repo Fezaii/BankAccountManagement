@@ -26,8 +26,8 @@ import javax.persistence.Temporal;
 @Entity
 public class Client extends Personne implements Serializable{
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-    private List<CompteBancaire> listeComptes = new ArrayList();
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<CompteBancaire> listeComptes = new ArrayList<CompteBancaire>();
 
     public Client() {
     }
@@ -40,8 +40,8 @@ public class Client extends Personne implements Serializable{
         this.listeComptes.add(compte);
     }
 
-    public Client(String name, String prenom, Date date, String adresse, String telephone, String mail) {
-        super(name, prenom, date, adresse, telephone, mail);
+    public Client(String name, String prenom, Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse) {
+        super(name, prenom, date, adresse, telephone, mail,identifiant,motdepasse);
         this.role = Role.CLIENT;
     }
 
