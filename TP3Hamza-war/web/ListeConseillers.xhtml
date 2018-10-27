@@ -28,8 +28,8 @@
         </div>
         <br></br>
         <div>
-            <a href="faces/ListeConseillers.xhtml"> Liste des conseillers </a>
-        </div>
+            <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
+        </div> 
         <br></br>
         <br></br>
         <br></br>
@@ -37,7 +37,7 @@
         <br></br>
         <br></br>
         <br></br>
-        <br></br>        
+        <br></br>
         <h:form>
             <h:commandButton value="Ajouter conseiller" action="/AddClient.xhtml"/> 
         </h:form>
@@ -48,7 +48,7 @@
         <br></br>
         <h:form>
             <h:commandButton value="Ajouter compte" action="/AddClient.xhtml"/> 
-        </h:form>
+        </h:form> 
         <br></br>
         <br></br>
         <br></br>
@@ -68,57 +68,32 @@
     </ui:define>
     <ui:define name="content">
         <h:body>
-            <p:dataTable  id="cTable" value="#{adminMBean.Comptes()}" var="item" paginator="true" rows="10"
+            <p:dataTable  id="cTable" value="#{adminMBean.Conseillers()}" var="item" paginator="true" rows="10"
                           rowsPerPageTemplate="10,20"
-                          emptyMessage="Aucun compte trouvé." >
+                          emptyMessage="Aucun clients trouvé." >
 
-                <p:column headerText="N° de compte">                                                        
+                <p:column headerText="N° de conseiller">                                                        
                     <h:outputText value="#{item.id}"/>
                 </p:column>
-                <p:column headerText="Noms des propréiotaires ">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="noms" >
-                        <h:column>                   
-                         #{noms.nom}
-                        </h:column>
-                    </h:dataTable>
+
+                <p:column headerText="Nom">
+                    <h:outputText value="#{item.nom}"/> 
                 </p:column>
-                <p:column headerText="Prenoms  des propréiotaires">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="prenoms" >
-                        <h:column>                   
-                         #{prenoms.prenom}
-                        </h:column>
-                    </h:dataTable>                     
+                
+                <p:column headerText="Prenom">
+                    <h:outputText value="#{item.prenom}"/> 
                 </p:column>
-                <p:column headerText="Date de naissance des propréiotaires">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="dates" >
-                        <h:column>                   
-                         #{dates.dateNaissance}
-                        </h:column>
-                    </h:dataTable>                     
+                <p:column headerText="Date de naissance">
+                    <h:outputText value="#{item.dateNaissance}"/> 
                 </p:column>
-                <p:column headerText="Adresse des propréiotaires">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="adresses" >
-                        <h:column>                   
-                         #{adresses.adresse}
-                        </h:column>
-                    </h:dataTable>                     
+                <p:column headerText="Adresse">
+                    <h:outputText value="#{item.adresse}"/> 
                 </p:column>
-                <p:column headerText="E-mail des propréiotaires">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="mails" >
-                        <h:column>                   
-                         #{mails.mail}
-                        </h:column>
-                    </h:dataTable> 
+                <p:column headerText="E-mail">
+                    <h:outputText value="#{item.mail}"/> 
                 </p:column>
-                <p:column headerText="N° telephone des propréiotaires">
-                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="telephones" >
-                        <h:column>                   
-                         #{telephones.telephone}
-                        </h:column>
-                    </h:dataTable>
-                </p:column>
-                <p:column headerText="Solde">
-                    <h:outputText value="#{item.solde}"/> 
+                <p:column headerText="N° telephone">
+                    <h:outputText value="#{item.telephone}"/> 
                 </p:column>
 <!--                <p:column headerText="Solde" sortBy="{item.solde}">
                     <h:outputText value="{item.solde}">
@@ -135,8 +110,7 @@
                 </p:column>-->
                 <p:column headerText="Actions">
                     <p:commandButton action="#{adminMBean.deleteConseiller(item.id)}" icon="ui-icon-trash"/>
-                    <p:commandButton action="{compteMBean.operation(item)}" icon="ui-icon-pencil"/>
-                    <p:commandButton action="{compteMBean.showDetails(item)}" icon="ui-icon-search"/>
+                    <p:commandButton action="{compteMBean.operation(item)}" icon="ui-icon-pencil"/> 
                 </p:column>     
 
             </p:dataTable>
@@ -146,5 +120,3 @@
 </ui:composition>
 
   
-
-

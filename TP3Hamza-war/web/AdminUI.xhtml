@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./DefaultTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="top">
+        <center> <h2 style="color:orange">BANK MANAGEMENT</h2> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </ui:define>
+    <ui:define name="left">
+        <div>
+            <a href="faces/ListeClients.xhtml"> Liste des clients </a>
+        </div>
+        <br></br>
+         <div>
+            <a href="faces/ListeConseillers.xhtml"> Liste des conseillers </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Retrait </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Depot </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Virement </a>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h:form>
+            <h:commandButton value="Ajouter conseiller" action="/AddClient.xhtml"/> 
+        </h:form>
+        <h:form>
+            <h:commandButton value="Ajouter client" action="/AddClient.xhtml"/> 
+        </h:form>
+        <h:form>
+            <h:commandButton value="Ajouter compte" action="/AddClient.xhtml"/> 
+        </h:form>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <p:commandButton value="Deconnexion" action="#{connexionMBean.disconnect()}" />     
+    </ui:define>
+
+    <ui:define name="content">
+        <center> <h1 style="color:black">Bienvenue dans votre espace  Administrateur</h1> </center>
+    </ui:define>
+
+</ui:composition>
