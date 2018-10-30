@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./DefaultTemplate.xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="top">
+        <center> <h2 style="color:orange">BANK MANAGEMENT</h2> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </ui:define>
+
+    <ui:define name="left">
+                <h:form>
+                    <p:commandButton id="back" value="Retour" action="#{compteMBean.Back(connexionMBean.getLoggedUser())}"/> 
+                </h:form>
+    </ui:define>
+
+    <ui:define name="content">
+        <f:view>
+            <h:form>
+                <p:panel id="panel" header="Ajouter un nouveau conseiller" style="margin-bottom:10px;">  
+
+                    <p:messages id="messages" globalOnly="true"/>
+
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Nom:" for="nom" />
+                        <p:inputText id="nom" value="#{conseillerMBean.nom}" title="Nom" required="true"
+                                     requiredMessage="Veuillez saisir le nom" />
+
+                        <h:outputLabel value="Prénom :" for="prenom" />
+                        <p:inputText id="prenom" value="#{conseillerMBean.prenom}" title="Prenom" required="true"
+                                     requiredMessage="Veuillez saisir le prénom" />
+
+                        <h:outputText value="Date de naissance: " />  
+                        <p:calendar value="#{conseillerMBean.dateNaiss}" id="popupButtonCal" showOn="button" /> 
+
+                        <h:outputLabel value="Adresse :" for="adresse" />
+                        <p:inputText id="adresse" value="#{conseillerMBean.adresse}" title="Adresse" />
+
+                        <h:outputLabel value="Téléphone :" for="telephone" />
+                        <p:inputText id="telephone" value="#{conseillerMBean.telephone}" title="telephone" required="true"
+                                     requiredMessage="Veuillez saisir le numéro de téléphone"/>
+
+                        <h:outputLabel value="Email :" for="mail" />
+                        <p:inputText id="mail" value="#{conseillerMBean.mail}" title="mail" />
+                        
+                        <h:outputLabel value="Identifiant :" for="identifiant" />
+                        <p:inputText id="identifiant" value="#{conseillerMBean.identifiant}" title="identifiant" />
+
+                        <h:outputLabel value="Mot de passe :" for="motdepasse" />
+                        <p:inputText id="motdepasse" value="#{conseillerMBean.motdepasse}" title="motdepasse" />
+                    
+                    </h:panelGrid>
+                </p:panel>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Ajouter" action="#{conseillerMBean.creerConseiller()}"/>
+                </h:panelGrid>                
+            </h:form>
+
+        </f:view>
+    </ui:define>
+
+</ui:composition>

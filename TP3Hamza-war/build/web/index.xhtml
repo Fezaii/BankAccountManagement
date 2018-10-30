@@ -1,23 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./DefaultTemplate.xhtml">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="./DefaultTemplate.xhtml"
+>
     <ui:define name="top">
-        <h1> Application de gestion de comptes bancaires </h1>
+        <center> <h2 style="color:orange">BANK MANAGEMENT</h2> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
     </ui:define>
-
     <ui:define name="left">
-        <div>
-            <a href="faces/ListeComptes.xhtml"> Liste des comptes </a>
-        </div>
-        <div>
-            <a href="faces/ListeOperations.xhtml"> Liste des operations </a>
-        </div>
+        <center><h4>Bienvenue dans votre banque</h4></center>
     </ui:define>
+    <h:head>
+        <title>Connexion</title>
+    </h:head>
 
-    <ui:define name="content">
-        <h1><strong>Naviguez vers le menu a gauche !</strong></h1>
-    </ui:define>
+        <ui:define name="content">
+            <f:view>
+                <h:form>
+                    <p:panel id="panel" header="Veuillez vous connectez" style="margin-bottom:10px;">  
 
+                        <p:messages id="messages" showDetail="true" closable="true">
+                            <p:autoUpdate />
+                        </p:messages>
+
+                        <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Identifiant :" for="nom" />
+                            <p:inputText id="nom" value="#{connexionMBean.identifiant}" title="Nom" required="true"
+                                         requiredMessage="Veuillez vous identifiez" />
+
+                            <h:outputLabel value="Mot de passe :" for="password" />
+                            <p:password id="feedback" value="#{connexionMBean.motdepasse}" feedback="true" required="true" requiredMessage="Veuillez entrez votre mot de passe"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Connexion" action="#{connexionMBean.connect()}" />
+                    </h:panelGrid>                
+                </h:form>
+
+            </f:view>
+        </ui:define>
 </ui:composition>
+

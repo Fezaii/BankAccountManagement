@@ -5,10 +5,16 @@
  */
 package managedbeans;
 
+import entities.Client;
+import entities.CompteBancaire;
+import entities.Conseiller;
+import entities.Personne;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
@@ -19,10 +25,10 @@ import session.GestionnaireDesClients;
 
 /**
  *
- * @author Hamza
+ * @author Fezai
  */
 @Named(value = "clientMBean")
-@ViewScoped
+@SessionScoped
 public class ClientMBean implements Serializable {
 
     @EJB
@@ -36,7 +42,14 @@ public class ClientMBean implements Serializable {
     private String telephone;
     private String mail;
     private String identifiant;
-
+    private String motdepasse;
+    private float solde;
+    private int consid;
+    
+    public List<CompteBancaire> Comptes(Personne personne){
+        Client c = (Client) personne;
+        return managerClient.getAllCompte(c);
+    }
     public String getIdentifiant() {
         return identifiant;
     }
@@ -52,8 +65,7 @@ public class ClientMBean implements Serializable {
     public void setMotdepasse(String motdepasse) {
         this.motdepasse = motdepasse;
     }
-    private String motdepasse;
-    private int consid;
+
 
     public int getConsid() {
         return consid;
@@ -62,7 +74,7 @@ public class ClientMBean implements Serializable {
     public void setConsid(int consid) {
         this.consid = consid;
     }
-    private float solde;
+    
     /**
      * Creates a new instance of ClientMBean
      */
@@ -71,12 +83,12 @@ public class ClientMBean implements Serializable {
 
     public String creerClient()
     {
-        managerClient.createClient(nom, prenom,dateNaiss, adresse, telephone, mail, solde,consid,identifiant,motdepasse);
+        this.managerClient.createClient(nom, prenom,dateNaiss, adresse, telephone, mail, solde,consid,identifiant,motdepasse);
         
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Création réussie !",  "Le client a été ajoutée.");  
           
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "ListeComptes?faces-redirect=true";
+        return "ListeClients?faces-redirect=true";
         
     }
     

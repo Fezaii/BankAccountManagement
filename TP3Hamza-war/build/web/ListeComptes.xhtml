@@ -7,38 +7,150 @@
                 template="./DefaultTemplate.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    
-        <ui:define name="content">
+    <ui:define name="top">
+        <center> <h2 style="color:orange">BANK MANAGEMENT</h2> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </ui:define>
 
-    <h:body>
-
+    <ui:define name="left">
+        <div>
+            <a href="AdminUI.xhtml"> Accueil </a>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div>
+            <a href="faces/ListeClients.xhtml"> Liste des clients </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeConseillers.xhtml"> Liste des conseillers </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Retrait </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/ListeComptes.xhtml"> Depot </a>
+        </div>
+        <br></br>
+        <div>
+            <a href="faces/Virement.xhtml"> Virement </a>
+        </div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>        
         <h:form>
-            <h:commandButton value="Creation test" action="#{compteMBean.compteTest()}"/> 
-        </h:form>           
+            <h:commandButton value="Ajouter conseiller" action="/AddConseiller.xhtml"/> 
+        </h:form>
+        <br></br>
+        <h:form>
+            <h:commandButton value="Ajouter client" action="/AddClient.xhtml"/> 
+        </h:form>
+        <br></br>
+        <h:form>
+            <h:commandButton value="Ajouter compte" action="/Register.xhtml"/> 
+        </h:form>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <p:commandButton value="Deconnexion" action="#{connexionMBean.disconnect()}" />  
+    </ui:define>
+    <ui:define name="content">
+        <h:body>
+            <p:dataTable  id="cTable" value="#{adminMBean.Comptes()}" var="item" paginator="true" rows="10"
+                          rowsPerPageTemplate="10,20"
+                          emptyMessage="Aucun compte trouvé." >
 
-        <f:view>
+                <p:column headerText="N° de compte">                                                        
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="Noms des propréiotaires ">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="noms" >
+                        <h:column>                   
+                         #{noms.nom}
+                        </h:column>
+                    </h:dataTable>
+                </p:column>
+                <p:column headerText="Prenoms  des propréiotaires">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="prenoms" >
+                        <h:column>                   
+                         #{prenoms.prenom}
+                        </h:column>
+                    </h:dataTable>                     
+                </p:column>
+                <p:column headerText="Date de naissance des propréiotaires">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="dates" >
+                        <h:column>                   
+                         #{dates.dateNaissance}
+                        </h:column>
+                    </h:dataTable>                     
+                </p:column>
+                <p:column headerText="Adresse des propréiotaires">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="adresses" >
+                        <h:column>                   
+                         #{adresses.adresse}
+                        </h:column>
+                    </h:dataTable>                     
+                </p:column>
+                <p:column headerText="E-mail des propréiotaires">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="mails" >
+                        <h:column>                   
+                         #{mails.mail}
+                        </h:column>
+                    </h:dataTable> 
+                </p:column>
+                <p:column headerText="N° telephone des propréiotaires">
+                    <h:dataTable value="#{compteMBean.getListeClient(item.id)}" var="telephones" >
+                        <h:column>                   
+                         #{telephones.telephone}
+                        </h:column>
+                    </h:dataTable>
+                </p:column>
+                <p:column headerText="Solde">
+                    <h:outputText value="#{item.solde}"/> 
+                </p:column>
+<!--                <p:column headerText="Solde" sortBy="{item.solde}">
+                    <h:outputText value="{item.solde}">
+                        <f:convertNumber currencySymbol="€" groupingUsed="{true}" maxFractionDigits="2" type="currency"/>
+                    </h:outputText>                                             
+                </p:column>-->
 
-            <h:form>
-                <h1><h:outputText value="List"/></h1>
-                <p:dataTable value="#{compteMBean.comptes}" var="item">
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Id"/>
-                        </f:facet>
-                        <a href="/Operation.xhtml">${item.id} </a>
-                    </p:column>
+<!--                <p:column headerText="Historique">
+                    <p:commandButton action="{compteMBean.showDetails(item)}" icon="ui-icon-search"/>                                  
+                </p:column>
 
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Solde"/>
-                        </f:facet>
-                        <h:outputText value="#{item.solde}"/>
-                    </p:column>
-                </p:dataTable>
-            </h:form>
-        </f:view>
+                <p:column headerText="Opérations">
+                    <p:commandButton action="{compteMBean.operation(item)}" icon="ui-icon-pencil"/>                                  
+                </p:column>-->
+                <p:column headerText="Actions">
+                    <p:commandButton action="#{adminMBean.deleteConseiller(item.id)}" icon="ui-icon-trash"/>
+                    <p:commandButton action="{compteMBean.operation(item)}" icon="ui-icon-pencil"/>
+                    <p:commandButton action="#{compteMBean.showDetails(item)}" icon="ui-icon-search"/>
+                </p:column>     
 
-    </h:body>
-                </ui:define>
+            </p:dataTable>
+        </h:body>
+    </ui:define>
 
 </ui:composition>
+
+  
+
+

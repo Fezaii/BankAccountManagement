@@ -8,9 +8,11 @@ package managedbeans;
 import entities.Client;
 import entities.CompteBancaire;
 import entities.OperationBancaire;
+import entities.Personne;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -20,11 +22,30 @@ import session.GestionnaireDeCompteBancaire;
 
 /**
  *
- * @author Hamza
+ * @author Fezai
  */
 @Named(value = "compteMBean")
-@ViewScoped
+@SessionScoped
 public class CompteMBean implements Serializable {
+    
+    private Long idDebiteur;
+
+    public Long getIdDebiteur() {
+        return idDebiteur;
+    }
+
+    public void setIdDebiteur(Long idDebiteur) {
+        this.idDebiteur = idDebiteur;
+    }
+
+    public Long getIdCrediteur() {
+        return idCrediteur;
+    }
+
+    public void setIdCrediteur(Long idCrediteur) {
+        this.idCrediteur = idCrediteur;
+    }
+    private Long idCrediteur;
 
     @EJB
     private GestionnaireDeCompteBancaire compteManager;
@@ -33,10 +54,9 @@ public class CompteMBean implements Serializable {
 
     /* Compte courant dans la session, utilisé pour afficher ses détails ou 
      * pour faire une mise à jour du compte modifié dans la base */
-    private EntityManager em;
-    private Long idDebiteur;
-    private Long idCrediteur;
-    private float montant = 0;
+    //private EntityManager em;
+
+    private float montant ;
     private int op;
 
     private String nom;
@@ -60,10 +80,6 @@ public class CompteMBean implements Serializable {
     public List<Client> getListeClient(long id) {
         return compteManager.getListeClient(id);
     }
-    /*public List<CompteBancaire> getComptes() {
-        listeComptes = compteManager.getAllComptes();
-        return listeComptes;
-    }*/
 
 
     public float getMontant() {
@@ -91,7 +107,9 @@ public class CompteMBean implements Serializable {
     }
 
     public List<OperationBancaire> getOperations() {
-        return compte.getOperations();
+        System.out.println("je suis lallalalala");
+        List<OperationBancaire> x =this.compte.getOperations();
+        return x;
     }
 
     /**
@@ -120,7 +138,7 @@ public class CompteMBean implements Serializable {
      * @return
      */
     public String showDetails(CompteBancaire compte) {
-        this.compte = compte;
+        this.setCompte(compte);
         return "Historique?faces-redirect=true";
     }
 
@@ -143,12 +161,12 @@ public class CompteMBean implements Serializable {
 
     public String ajouterMontant() {
         compteManager.deposer(compte, montant);
-        return "ajouter?faces-redirect=true";
+        return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String retirerMontant() {
         compteManager.retirer(compte, montant);
-        return "ListeComptes?faces-redirect=true";
+        return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String transfertMontant() {
@@ -157,7 +175,7 @@ public class CompteMBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Virement réussi !", "Le viremenent a été effectué");
 
         FacesContext.getCurrentInstance().addMessage(null, message);
-        return "ListeComptes?faces-redirect=true";
+        return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String suppression(CompteBancaire compte) {
@@ -192,8 +210,17 @@ public class CompteMBean implements Serializable {
      *
      * @return
      */
-    public String list() {
-        return "ListeComptes?faces-redirect=true";
+    public String Back(Personne personne) {
+         switch (personne.getRole()) {
+                case ADMIN:
+                    return "AdminUI?faces-redirect=true";
+                case CONSEILER:
+                    return "ConseillerUI?faces-redirect=true";
+                case CLIENT:
+                    return "ClientUI?faces-redirect=true";
+                default:
+                    return "index?faces-redirect=true";
+            }
     }
 
     public String colorow(float solde) {

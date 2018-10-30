@@ -7,7 +7,9 @@ package session;
 
 import entities.Admin;
 import entities.Client;
+import entities.CompteBancaire;
 import entities.Conseiller;
+import entities.Personne;
 import entities.Role;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,8 +41,19 @@ public class ConseillerManager {
     public void persist(Object object) {
         em.persist(object);
     }
-
- 
+    
+    public List<Client> getAllClient(Conseiller conseiller){
+        return conseiller.getListeClient();
+    }
+    public void deleteClient(Client client) {
+        Query query = em.createNamedQuery("Personne.deleteById",Personne.class);
+        query.setParameter("id",client.getId());
+        query.executeUpdate();    
+    }
+    public Client getClientById(int id){
+        Query query = em.createNamedQuery("Personne.findById").setParameter("id",id);
+        return (Client)query.getSingleResult();    
+    }
     public Conseiller createConseiller(String nom, String prenom,Date date, String adresse, String telephone, String mail,String identifiant,String motdepasse){
         Conseiller conseiller=new Conseiller(nom, prenom,date, adresse, telephone, mail,identifiant,motdepasse);
         persist(conseiller);

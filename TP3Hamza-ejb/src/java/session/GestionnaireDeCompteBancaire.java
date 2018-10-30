@@ -40,13 +40,7 @@ public class GestionnaireDeCompteBancaire {
     public List<Client> getListeClient(long id) {
         return getCompteByID(id).getListeClient();
     }
-    /*public String creerCompteTest() {
-        creerCompte(150000);
-        creerCompte(950000);
-        creerCompte(20000);
-        creerCompte(100000);
-        return "liste_comptes";
-    }*/
+
 
     public void persist(Object object) {
         em.persist(object);
