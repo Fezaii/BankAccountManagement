@@ -29,11 +29,11 @@
         </div>
         <br></br>
         <div>
-            <a href="faces/ListeComptes.xhtml"> Retrait </a>
+            <a href="faces/Retrait.xhtml"> Retrait </a>
         </div>
         <br></br>
         <div>
-            <a href="faces/ListeComptes.xhtml"> Depot </a>
+            <a href="faces/Depot.xhtml"> Depot </a>
         </div>
         <br></br>
         <div>
@@ -101,7 +101,6 @@
                 </p:column>
                 <p:column headerText="Actions">
                     <p:commandButton action="#{adminMBean.deleteClient(item.id)}" icon="ui-icon-trash"/>
-                    <p:commandButton action="{compteMBean.operation(item)}" icon="ui-icon-pencil"/> 
                 </p:column>      
 
             </p:dataTable>

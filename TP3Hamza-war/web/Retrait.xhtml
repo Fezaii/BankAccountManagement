@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./DefaultTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:define name="top">
+        <center> <h2 style="color:orange">BANK MANAGEMENT</h2> </center>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+    </ui:define>
+
+    <ui:define name="left" >
+                <h:form>
+                    <p:commandButton id="back" value="Retour" action="#{compteMBean.Back(connexionMBean.getLoggedUser())}"/> 
+                </h:form>
+    </ui:define>
+
+    <ui:define name="content" >
+        <f:view>
+            <h:form>
+                <p:growl id="growl" life="5000" showDetail="true" sticky="false"/>
+
+                <p:panel id="panel" header=" Retrait" style="margin-bottom:10px;">  
+
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Numero de compte: " for="compte" />
+                        <p:inputText id="compte" value="#{compteMBean.numerocompte}" title="compte" required="true"
+                                         requiredMessage="Veuillez saisir le numero du compte" />
+                        
+                        <h:outputLabel value="Montant : " for="montant"/>
+                        <p:spinner id="montant" value="#{compteMBean.montant}" prefix="€" 
+                                   requiredMessage="Veuillez saisir le montant" required="true" min="0"/>  
+                    </h:panelGrid>
+                </p:panel>
+
+                <h:panelGrid columns="2" >
+                    <p:commandButton update="growl" value="Valider" action="#{compteMBean.retirerMontant()}" />   
+                </h:panelGrid>
+            </h:form>
+        </f:view>
+    </ui:define>
+
+</ui:composition>

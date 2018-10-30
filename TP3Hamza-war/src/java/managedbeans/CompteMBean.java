@@ -28,6 +28,17 @@ import session.GestionnaireDeCompteBancaire;
 @SessionScoped
 public class CompteMBean implements Serializable {
     
+    private Long numerocompte;
+
+    public Long getNumerocompte() {
+        return numerocompte;
+    }
+
+    public void setNumerocompte(Long numerocompte) {
+        this.numerocompte = numerocompte;
+    }
+    
+    
     private Long idDebiteur;
 
     public Long getIdDebiteur() {
@@ -49,6 +60,7 @@ public class CompteMBean implements Serializable {
 
     @EJB
     private GestionnaireDeCompteBancaire compteManager;
+    
     private List<CompteBancaire> listeComptes;
     private CompteBancaire compte;
 
@@ -160,31 +172,23 @@ public class CompteMBean implements Serializable {
     }
 
     public String ajouterMontant() {
-        compteManager.deposer(compte, montant);
+        compteManager.deposer(numerocompte, montant);
         return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String retirerMontant() {
-        compteManager.retirer(compte, montant);
+        compteManager.retirer(numerocompte, montant);
         return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String transfertMontant() {
         compteManager.transfertArgent(idDebiteur, idCrediteur, montant);
-
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Virement réussi !", "Le viremenent a été effectué");
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
         return Back((Personne)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user"));
     }
 
     public String suppression(CompteBancaire compte) {
         
         compteManager.delete(compte);
-        System.out.println("managedbeans.CompteMBean.suppression()");
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Suppression réussie !", "La suppression a été effectuée");
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
         return "ListeComptes?faces-redirect=true";
     }
 

@@ -88,30 +88,32 @@ public class GestionnaireDeCompteBancaire {
     }
 
   
-    public CompteBancaire deposer(CompteBancaire compte, float montant){
-        compte.deposer(montant);
+    public CompteBancaire deposer(Long compte, float montant){
+        CompteBancaire cpt = getCompteByID(compte);
+        cpt.deposer(montant);
         //creerOperation(compte, "Dépot", montant);
-        em.merge(compte);
+        em.merge(cpt);
         
-        return update (compte);
+        return update (cpt);
     }
     
-    public CompteBancaire retirer(CompteBancaire compte, float montant){
-        compte.retirer(montant);
+    public CompteBancaire retirer(Long compte, float montant){
+        CompteBancaire cpt = getCompteByID(compte);
+        cpt.retirer(montant);
         //creerOperation(compte, "Retrait", montant);
-        em.merge(compte);
-        return update (compte);
+        em.merge(cpt);
+        return update (cpt);
     }
     
     
     public void operation(int op, CompteBancaire compte, float montant){
                
         if (op == 0){
-            compte = this.retirer(compte, montant);
+            compte = this.retirer(compte.getId(), montant);
         }
         else 
             if (op == 1) {
-            compte= this.deposer(compte, montant);      
+            compte= this.deposer(compte.getId(), montant);      
             }
         
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Opération réussie !","L'opération a été effectuée");  
