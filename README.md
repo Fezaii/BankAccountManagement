@@ -1,4 +1,4 @@
-# Projet UE5 - Gestion de comptes bancaires
+# Projet UE5 - BANK MANAGEMENT
 
 ## Equipe : <br>
 - Fezai Ahmed <br>
